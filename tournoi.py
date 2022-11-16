@@ -11,6 +11,7 @@ class Tournoi:
 	def afficher_tournoi(self):
 			print(self.name_tournoi)
 			print(self.lieu_tournoi)
+			print(self.joueurs)
 			
 class Joueur:
 	def __init__(self, nom, prenom, date_naissance, sexe, rating, score=0):
@@ -89,7 +90,7 @@ def main():
 
 		while True:
 			try:
-				rating=int(input("Classement ELO (nombre entier: "))
+				rating=int(input("Classement ELO (nombre entier: )"))
 				if rating>1599:
 					break
 			except ValueError:
@@ -102,18 +103,24 @@ def main():
 		#print(f'{i.nom} {i.prenom} {i.date_naissance} {i.sexe}, {i.rating}')
 		print(f'{i.nom} {i.rating}')
 	
-	"""Sorting players by rank
+	"""Descending sorting players by rank
 
-	2 loops go though the p=layers' rankings and intervert players where needed"""
+	2 loops go though the players' rankings and intervert players where needed"""
 	
 	for j in range(0,7):
+		#table_sorted=true
 		for i in range(0,7):
 			joueur=joueurs[i].rating
+			"""# possibilité d'optimiser le tri en commançant dernier élément du tableau
+			sans intérêt pour un petit tableau"""
 			print(f'Joueur {joueurs[i].nom} Classement {joueurs[i].rating} index {i}')
 			if joueurs[i+1].rating>joueur:
 				#print(f'{joueurs[i].nom} est moins bien classé que {joueurs[i+1].nom}')
 				#print (f'tour {j} indice joueur = {i}')
 				joueurs[i], joueurs[i+1]=joueurs[i+1], joueurs[i]
+				#tabel_sorted=false
+		#if table_sorted=true:
+		#return		
 			#elif joueurs[i+1].rating==joueur:  elif optionnel pour vérif des comparaisons
 				#print(f"{joueurs[i].nom} a le même classement que {joueurs[i+1].nom}")
 			#else:
@@ -129,11 +136,10 @@ def main():
 	nom_tournoi=input("Nom du tournoi : ")
 	lieu_tournoi=input("Lieu du tournoi : ")
 	date_tournoi=input("Date du tournoi : ")
-	#self_tournees=
+	#self_tournees= ?
+
 	
 	tournoi=Tournoi(nom_tournoi,lieu_tournoi,date_tournoi,joueurs)
-	#print(tournoi.name_tournoi)
-	#print(tournoi.lieu_tournoi)
 	tournoi.afficher_tournoi()
 
 if __name__ == "__main__":
