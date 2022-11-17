@@ -1,11 +1,13 @@
 import re
 
 class Tournoi:
-	def __init__(self, name_tournoi, lieu_tournoi, date_tournoi, joueurs, nombre_tours=4):
+	def __init__(self, name_tournoi, lieu_tournoi, date_tournoi, joueurs, nombre_tours=4, controle_temps="", description=""):
 		self.name_tournoi=name_tournoi
 		self.lieu_tournoi=lieu_tournoi
 		self.date_tournoi=date_tournoi
 		self.nombre_tours=nombre_tours
+		self.controle_temps=controle_temps
+		self.description=description
 		self.joueurs=joueurs
 
 	def afficher_tournoi(self):
@@ -22,9 +24,15 @@ class Joueur:
 		self.rating=rating
 		self.score=score
 
+	def __str__(self):
+		return self.nom, self.prenom, self.rating
+        
+	def __repr__(self):
+		return str(self)
+
 	
 	def afficher_joueur(self):
-	   	print(self.nom + "\n" +self.prenom+ "\n"+self.sexe)
+	   	print(self.nom + "\n" +self.prenom+ "\n"+self.sexe+"\n"+self.rating)
 
 class Tour:
 	tours=[]
@@ -115,18 +123,8 @@ def main():
 			sans intérêt pour un petit tableau"""
 			print(f'Joueur {joueurs[i].nom} Classement {joueurs[i].rating} index {i}')
 			if joueurs[i+1].rating>joueur:
-				#print(f'{joueurs[i].nom} est moins bien classé que {joueurs[i+1].nom}')
-				#print (f'tour {j} indice joueur = {i}')
 				joueurs[i], joueurs[i+1]=joueurs[i+1], joueurs[i]
-				#tabel_sorted=false
-		#if table_sorted=true:
-		#return		
-			#elif joueurs[i+1].rating==joueur:  elif optionnel pour vérif des comparaisons
-				#print(f"{joueurs[i].nom} a le même classement que {joueurs[i+1].nom}")
-			#else:
-				#pass
-				#print(f"{joueurs[i].nom} est mieux classé que {joueurs[i+1].nom}")
-	
+				
 	print("\nClassement après tri : \n")		
 	for i in joueurs:
 		print(i.nom, i.prenom, i.rating)
@@ -141,6 +139,15 @@ def main():
 	
 	tournoi=Tournoi(nom_tournoi,lieu_tournoi,date_tournoi,joueurs)
 	tournoi.afficher_tournoi()
+
+	"""Creating 1 roudn (premier match), list of matches
+	Add to the index of each of the 4 top players to determine opponent for 1st round"""
+
+	match=[]
+	for i in range(0,4):
+		match[i]=((joueurs[i],0),(joueurs[i+4],0))
+		print(match[i])
+
 
 if __name__ == "__main__":
     main()
