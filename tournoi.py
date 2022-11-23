@@ -40,6 +40,7 @@ class Tour:
     tours=[]
     def __init__(self,round_number,matchs):
         self.round_number=round_number
+        self.matchs=matchs
 
     def creation_tour():
         print(f"Tour numéro {self.round_number}")
@@ -79,7 +80,7 @@ def main():
 
     """NOUVEAU TOURNOI ET SAISIE DES JOUEURS (6 joueurs pour test)
 
-    Création d'un nouveau tournoi et de la liste des joueurs, classés par ELO"""
+    Création d'un nouveau tournoi et de la liste des joueurs, classés par ELO, donc pour le 1er tour"""
     
     joueurs=[]
 
@@ -99,13 +100,13 @@ def main():
 
         while True:
             try:
-                rating=int(input("Classement ELO (nombre entier: )"))
+                rating=int(input("Classement ELO (nombre entier :) "))
                 if rating>1599:
                     break
             except ValueError:
                 print("Le classement doit être un chiffre entier, positif et au moins égal à 1600")
         
-        joueur=Joueur(nom, prenom, date_naissance, sexe, rating)
+        joueur=Joueur(nom, prenom, date_naissance, sexe, rating, score=0)
         joueurs.append(joueur)
          
     for i in joueurs:
@@ -122,7 +123,7 @@ def main():
             joueur=joueurs[i].rating
             """# possibilité d'optimiser le tri en commançant dernier élément du tableau
             sans intérêt pour un petit tableau"""
-            print(f'Joueur {joueurs[i].nom} Classement {joueurs[i].rating} index {i}')
+            #print(f'Joueur {joueurs[i].nom} Classement {joueurs[i].rating} index {i}')
             if joueurs[i+1].rating>joueur:
                 joueurs[i], joueurs[i+1]=joueurs[i+1], joueurs[i]
                 
@@ -148,14 +149,23 @@ def main():
     tournoi=Tournoi(nom_tournoi,lieu_tournoi,date_tournoi,joueurs)
     tournoi.afficher_tournoi()"""
 
-    """Creating 1 round (premier match), list of matches
+    """Creating 1 round (premier match), list of matches and add match to a list of matches
     Add to the index of each of the 3 top players to determine opponent for 1st round"""
 
-    match=[]
+    matchs=[]
+    
     for i in range(0,3):
-        print(f"Match  {i}")
-        #match[i]=((joueurs[i]),(joueurs[i+3]))
+        print(f"Match  {i} : ")
         print(joueurs[i].nom +" vs "+ joueurs[i+3].nom)
+        match=([joueurs[i].nom, joueurs[i].score], [joueurs[i+3].nom, joueurs[i+3], joueurs[i+3].score])
+        matchs.append(match)
+        tour.append(match)
+        print(match)
+        #print(matchs)
+
+    premier_tour=Round("Premier tour", 1, matchs)
+    print(premier_tourtour)
+
 
     #Nouveau tournoi    
     nouveau_tournoi=[]
