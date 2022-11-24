@@ -1,81 +1,20 @@
-from views.player import Joueur
+from models.player import Joueur
 from views.tournoi import Tournoi
+from views.match import Match
+from views.round import Round
 import re
-
-"""class Tournoi:
-    def __init__(self, name_tournoi, lieu_tournoi, date_tournoi, joueurs, type="Blitz", nombre_tours=4, controle_temps="", description=""):
-        self.name_tournoi=name_tournoi
-        self.lieu_tournoi=lieu_tournoi
-        self.date_tournoi=date_tournoi
-        self.nombre_tours=nombre_tours
-        self.controle_temps=controle_temps
-        self.description=description
-        self.joueurs=joueurs
-
-    def afficher_tournoi(self):
-            print(self.name_tournoi)
-            print(self.lieu_tournoi)
-            print(self.joueurs)
-            """
-"""class Joueur:
-    def __init__(self, nom, prenom, date_naissance, sexe, rating, score=0):
-        self.nom=nom
-        self.prenom=prenom
-        self.date_naissance = date_naissance
-        self.sexe=sexe
-        self.rating=rating
-        self.score=score
-
-    def __str__(self):
-        return self.nom, self.prenom, self.rating
-        
-    def __repr__(self):
-        return str(self)
-
-    
-    def afficher_joueur(self):
-        print(self.nom + "\n" +self.prenom+ "\n"+self.sexe+"\n"+self.rating)"""
-
-class Tour:
-    tours=[]
-    def __init__(self,round_number,matchs):
-        self.round_number=round_number
-        self.matchs=matchs
-
-    def creation_tour():
-        print(f"Tour numéro {self.round_number}")
-
-class Match:
-    matchs=[]
-    def __init__(self):
-        #self.joueur1=joueur1
-        #self.joueur2=joueur2
-        pass
-
-    """for i in range(0,4):
-        match[i]=([joueurs[i], score], [joueur[i+4], score])
-        Un match unique doit être stocké sous la forme d'un tuple
-        contenant deux listes, chacune contenant deux éléments : 
-        une référence à une instance de joueur et un score.
-        Les matchs multiples doivent être stockés sous forme de liste sur l'instance du tour."""
+import tinydb
 
 def main():
 
-    # MENU
-    #1 Nouveau tournoi
-    #2 Saisie des joueurs -> MODELE
-    #3 Saisie tour (appareillement selon indice)
-    #4 Saisie résultats d'un tour
-    #5 Afficher classement
-    #6 Quitter
-
+    """ MENU Vue ? Traitement du choix du menu dans Controlers et affichage du menu dans View ?
 
     print("1. Nouveau tournoi et saisie des joueurs")
     print("2. Affichage des matchs")
     print("3. Saisie des résultats")
     print("4. Match du tour suivant")
     print("5. Afficher classement")
-    print("6. Quitter")
+    print("6. Quitter")"""
 
 
     """NOUVEAU TOURNOI ET SAISIE DES JOUEURS (6 joueurs pour test)
@@ -104,7 +43,7 @@ def main():
                 if rating>1599:
                     break
             except ValueError:
-                print("Le classement doit être un chiffre entier, positif et au moins égal à 1600")
+                print("Le classement doit être un entier, positif et au moins égal à 1600")
         
         joueur=Joueur(nom, prenom, date_naissance, sexe, rating, score=0)
         joueurs.append(joueur)
@@ -117,13 +56,9 @@ def main():
 
     2 loops go though the players' rankings and intervert players where needed"""
     
-    for j in range(0,5):
-        #table_sorted=true
+    for j in range(0,5):# utiliser sort -> dans Views
         for i in range(0,5):
             joueur=joueurs[i].rating
-            """# possibilité d'optimiser le tri en commançant dernier élément du tableau
-            sans intérêt pour un petit tableau"""
-            #print(f'Joueur {joueurs[i].nom} Classement {joueurs[i].rating} index {i}')
             if joueurs[i+1].rating>joueur:
                 joueurs[i], joueurs[i+1]=joueurs[i+1], joueurs[i]
                 
@@ -135,25 +70,11 @@ def main():
 
     """#Création d'un tournoi
 
-    nom_tournoi=input("Nom du tournoi : ")
-    lieu_tournoi=input("Lieu du tournoi : ")
-    date_tournoi=input("Date du tournoi : ")
-    print ("Type de tournoi :")
-    print("1. Rapide")
-    print("2. Blitz")
-    print("3. Bullet")
-    type_tournoi=int(input
-    #self_tournees= ?
-
-    
-    tournoi=Tournoi(nom_tournoi,lieu_tournoi,date_tournoi,joueurs)
-    tournoi.afficher_tournoi()"""
-
-    """Creating 1 round (premier match), list of matches and add match to a list of matches
+   Creating 1 round (premier match), list of matches and add match to a list of matches
     Add to the index of each of the 3 top players to determine opponent for 1st round"""
 
     matchs=[]
-    
+    tour=[]
     for i in range(0,3):
         print(f"Match  {i} : ")
         print(joueurs[i].nom +" vs "+ joueurs[i+3].nom)
@@ -163,11 +84,11 @@ def main():
         print(match)
         #print(matchs)
 
-    premier_tour=Round("Premier tour", 1, matchs)
-    print(premier_tourtour)
+    premier_tour=Round(1, matchs)
+    print(premier_tour)
 
 
-    #Nouveau tournoi    
+    #New tournament    
     nouveau_tournoi=[]
     nom_tournoi=input("Nom du tournoi :\n")
     lieu_tournoi=input("Lieu du tournoi :\n")
@@ -178,8 +99,24 @@ def main():
     nouveau_tournoi=Tournoi(nom_tournoi,lieu_tournoi,date_tournoi,joueurs,type_tournoi,description)
     nouveau_tournoi.afficher_tournoi()
 
-    #Nouveau tour
-
+    """Résultats des matchs et modification des scrores et classements   -> Controler"""
+    """print("Pour les résultats, 1=gain premier joueur, 2=gain du second joueur, 0=match nul")
+    saisie des résultats dans la vue
+    for i in range(0,3):
+        resultat=int(input(f"Résultat du match entre {joueurs[i].nom} et {joueur[i+3].nom}"))
+        if resultat==1:
+            joueurs[i].score+=1
+        elif result==2:
+            joueur[i+3]+=1
+        elif resultat==0:
+            joueurs[i].score+=0.5
+            joueurs[i+3].score+=0.5
+        else:
+            print("Donnée non valable")    
+        print(joueurs[i].score +" " +joueurs[i+3].score) -> vue pour l'affichage, controler pour modif des scores
+        
+        Appeler ensuite fonction/méthode de classement au terme des résultats du tour
+           """        
 
 if __name__ == "__main__":
     main()
