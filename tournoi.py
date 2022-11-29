@@ -24,6 +24,7 @@ def main():
     players_table = db.table('players')
     players_table.truncate()# clear the table
     
+    #def saisie_joueurs()
     for i in range (1,7):
         score=0
         print(f"Saisie du joueur {i}\n")
@@ -62,18 +63,32 @@ def main():
 
     2 loops go though the players' rankings and intervert players where needed"""
     
-    for j in range(0,5):# utiliser sort -> dans Views
+    """for j in range(0,5):# utiliser sort -> dans Views
         for i in range(0,5):
             joueur=joueurs[i].rating
             if joueurs[i+1].rating>joueur:
-                joueurs[i], joueurs[i+1]=joueurs[i+1], joueurs[i]
-                
-    print("\nClassement après tri : \n")        
+                joueurs[i], joueurs[i+1]=joueurs[i+1], joueurs[i]"""
+    
+    #classement par ELo (descendant)
+    classement_par_elo=classement_ELO(joueurs)
+    classement_alpha=classement_alphabetique(joueurs)
+    """joueurs.sort(key=lambda j: j.rating, reverse=True)
+    print("\nClassement par ELO : \n")        
     for i in joueurs:
         print(i.name, i.f_name, i.rating)
 
     print(joueurs)
 
+    #classement alphabétique
+    
+    joueurs.sort(key=lambda j: j.name, reverse=False)
+    print("\nClassement par ordre alphabétique : \n")        
+    for i in joueurs:
+        print(i.name, i.f_name, i.rating)
+
+    print(joueurs)"""
+    
+    
     """#Crating a tournament
 
    Creating 1st round (premier match), list of matches and add every match to a list of matches
