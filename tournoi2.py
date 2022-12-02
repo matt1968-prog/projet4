@@ -108,14 +108,16 @@ def main():
                 #matchs_joues[i][j]=0
             #j+=1"""
     
-    """#Crating 1st round of a tournament
-    Add 3 to the index of each of the 3 top players to determine opponent for 1st round"""
+    """#Creating 1st round of a tournament
+    Add 3 to the index of each of the 3 top players to determine opponent for 1st round (with list of 6 players)"""
 
     matchs=[]
     tour=[]
     nbre_joueurs=6
+    round_number=1
+    
     for i in range(0,3):
-        print(f"Match  {i} : ")
+        print(f"Tour {round_number} Match {i+1} : ")
         print(joueurs[i].name +" vs "+ joueurs[i+3].name)
         match=([joueurs[i].name, joueurs[i].score], [joueurs[i+3].name, joueurs[i+3], joueurs[i+3].score])
         matchs.append(match)
@@ -132,6 +134,7 @@ def main():
     print(premier_tour)
 
 
+    
     #New tournament    
     nouveau_tournoi=[]
     nom_tournoi=input("Nom du tournoi :\n")
@@ -143,40 +146,72 @@ def main():
     nouveau_tournoi=Tournoi(nom_tournoi,lieu_tournoi,date_tournoi,joueurs,type_tournoi,description)
     nouveau_tournoi.afficher_tournoi()
 
-    #Résultats des matchs et modification des scrores et classements#-> Controler
+    #Résultats des matchs et modification des scores et classements #-> Controler
     print("Pour les résultats, 1=gain premier joueur, 2=gain du second joueur, 0=match nul")
     #saisie des résultats dans la vue
     for i in range(0,3):
         z=i
         print(joueurs[i].name +" vs "+ joueurs[i+3].name) 
-        resultat=int(input("Résultat : "))
-        if resultat==1:
-            joueurs[i].score+=1            
-        elif resultat==2:
-            joueurs[i+3].score+=1
-        elif resultat==0:
-            joueurs[i].score+=0.5
-            joueurs[i+3].score+=0.5
-            matchs_joues[i][z+3]+=0.5
-            matchs_joues[i][z+3]+=0.5
-        else:
-            print("Donnée non valide")    
+        try:
+            resultat=int(input("Résultat : "))
+            if resultat==1:
+                joueurs[i].score+=1            
+            elif resultat==2:
+                joueurs[i+3].score+=1
+            elif resultat==0:
+                joueurs[i].score+=0.5
+                joueurs[i+3].score+=0.5
+                matchs_joues[i][i+3]+=0.5
+                matchs_joues[i][i+3]+=0.5
+            else:
+                print("Donnée non valide")    
+        except ValueError:
+            print("Vous devez saisir 0, 1 ou 2.")
         print(str(joueurs[i].score) +" " +str(joueurs[i+3].score))# -> vue pour l'affichage, controler pour modif des scores
-        matchs_joues[i][z+3]=1
+        #matchs_joues[i][z+3]=1
         
     # Affichage du tableau des matchs joueués ou non (0=non joué)
     """for i in range(6):
         for j in range(6):
             print(matchs_joues[i,j])"""
     
-    #actualisation des scores des joueurs
-    for j in range(0,5):# utiliser sort -> dans Views
-        for i in range(0,5):
-            joueur=joueurs[i].score
-            if joueurs[i+1].score>joueur:
-                joueurs[i], joueurs[i+1]=joueurs[i+1], joueurs[i]
+    #actualisation du classement après le 1er tour
+    print("\nClassement après le 1er match : \n")
+    joueurs.sort(key=lambda j: j.score, reverse=True)      
+    for i in joueurs:
+        print(i.name, i.f_name, i.score)
                 
-    print("\nClassement après le 1er match : \n")        
+    """#Définition des matchs des tours suivants (à partir du tour 2)
+    Joueur 1 contre 2, 3 contre 4, etc. Avec 8 joueurs, joueur 1 contre joueur 2, 2 contre 3, etc. 7 contre 8.
+    QUE FAIRE SI, PAR EXEMPLE,  2 JOUEURS PERDENT TOUS 2 LE 1ER TOUR ?
+    
+    """
+    round_number+=1
+    compteur_match=1
+    for i in range(0,4,2):
+        print(f"Tour {round_number} Match  {compteur_match} : ")
+        match_deja_joue=matchs_joues[i][i+1]
+        if match_deja_joue==0: # si 0 match non disputé entre joueur i et joueur i+1
+            print(joueurs[i].name +" vs "+ joueurs[i+1].name)
+            match=([joueurs[i].name, joueurs[i].score], [joueurs[i+1].name, joueurs[i+3], joueurs[i+1].score])
+            matchs_joues[i][i+1]=1
+        else:
+            print(joueurs[i].name +" vs "+ joueurs[i+2].name)
+            match=([joueurs[i].name, joueurs[i].score], [joueurs[i+2].name, joueurs[i+2], joueurs[i+2].score])
+            matchs_joues[i][i+2]=1
+        compteur_match+=1
+        matchs.append(match)
+        tour.append(match)
+        
+        for i in matchs:
+            print(i)
+        #print(matchs)
+
+    print("Après le 1er tour, tableau en mémoire des rencontres :")
+    print(matchs_joues)
+    
+    #premier_tour=Tour(1, matchs)
+    #print(premier_tour)    
     """for i in range (cols):
         col=[]
         for j in range(rows):
@@ -185,7 +220,7 @@ def main():
             else:
                 col.append(0)
         matchs_joues.append(col)"""
-    print(matchs_joues) 
+    #print(matchs_joues) 
             
 if __name__ == "__main__":
     main()
