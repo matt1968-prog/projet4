@@ -30,9 +30,12 @@ class CreationJoueur:
         
             joueur = CreationJoueur(nom, prenom, dob, sex, rating)
             joueurs.append(joueur)    
-        with open ("fichier_joueurs.json", "w") as fj:    
-            json.dumps(joueurs)
-            print(fj)    
+        print(joueurs)
+            #joueur = {"Nom": "nom", "Prenom": "prenom", "Date de naissance": "dob", "Sexe": "sex", "Classement ELO": "rating"}
+            #joueurs.append(joueur)
+        #with open ("fichier_joueurs.json", "w") as fj:    
+         #   json.dump(joueurs, fj)
+          #  print(fj)    
 
 
 
