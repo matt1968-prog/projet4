@@ -30,6 +30,7 @@ def main():
         print("Saisie des joueurs")
         nouveaux_joueurs = CreationJoueur
         nouveaux_joueurs.creer_joueurs()
+        nouveaux_joueurs.tri_alpha(joueurs)
         #joueurs.tri_alpha
         #joueurs.tri_elo
         #nouveau_tournoi = NouveauTournoi
