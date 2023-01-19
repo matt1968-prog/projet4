@@ -8,6 +8,7 @@ from vues.menu import AffichageMenu
 from contrôleurs.creation_joueurs import CreationJoueur
 from contrôleurs.creation_tournoi import NouveauTournoi
 from datetime import date
+import json
 #from contrôleurs.creation_joueurs import tri_alpha
 #from contrôleurs.creation_joueurs import tri_elo
 
@@ -29,10 +30,10 @@ def main():
         print("Saisie des joueurs")
         nouveaux_joueurs = CreationJoueur
         nouveaux_joueurs.creer_joueurs()
-        joueurs.tri_alpha
-        joueurs.tri_elo
+        #joueurs.tri_alpha
+        #joueurs.tri_elo
         #nouveau_tournoi = NouveauTournoi
-        #nouveau_tournoi.afficher_tournoi
+        #nouveau_tournoi.afficher_tournoi()
     elif choix == 2:
         pass
     elif choix == 3:
