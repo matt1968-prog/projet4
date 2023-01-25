@@ -8,5 +8,5 @@ class Tournoi:
 		self.nombre_tours = nombre_tours
 		self.type_tournoi = type_tournoi
 		self.description = description
-		self.joueurs = joueurs
+		#self.joueurs = joueurs
         
