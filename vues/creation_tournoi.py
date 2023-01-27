@@ -5,7 +5,8 @@ class NouveauTournoi:
     def __init__(self):
         self.nom_tournoi = input("Nom du tournoi :\n")
         self.lieu_tournoi = input("Lieu du tournoi :\n")
-        self.date_tournoi = input("Date du tournoi : ")
+        self.date_debut_tournoi = input("Date de début du tournoi : ")
+        self.date_fin_tournoi = input("Date de fin du tournoi : ")
         self.nombre_tours = 4
         while True:
             try:
@@ -13,10 +14,11 @@ class NouveauTournoi:
                 if self.type_tournoi >0 and self.type_tournoi <4:
                     break
             except ValueError:
-                print("La valeur doit être comprise entre 1 et 3")
+                print("La valeur doit être un nombre entier compris entre 1 et 3")
 
         self.description = input("Description (facultatif, taper sur Entrée pour ne pas mettre de description) \n")
-        nouveau_tournoi = Tournoi(self.nom_tournoi, self.lieu_tournoi, self.date_tournoi, self.type_tournoi, self.description, self.nombre_tours)
+        nouveau_tournoi = Tournoi(self.nom_tournoi, self.lieu_tournoi,
+        self.date_debut_tournoi, self.date_fin_tournoi, self.type_tournoi, self.description, self.nombre_tours)
         
     def afficher_tournoi(self):
         TOURNAMENT_TYPE ={1:"Rapide", 2:"Blitz", 3:"Bullet"}
@@ -25,7 +27,8 @@ class NouveauTournoi:
         print()
         print(f"Nom du tournoi : {self.nom_tournoi}")
         print(f"Lieu : {self.lieu_tournoi}")
-        print(f"Date : {self.date_tournoi}")
+        print(f"Date de début : {self.date_debut_tournoi}")
+        print(f"Date de fin : {self.date_fin_tournoi}")
         #print(self.joueurs)
         type_tournoi = int(self.type_tournoi)
         print(f"Type de tournoi : {TOURNAMENT_TYPE[type_tournoi]}")# ({self.type_tournoi}) ")
