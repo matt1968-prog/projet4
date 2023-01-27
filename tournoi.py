@@ -8,9 +8,10 @@ from vues.menu import AffichageMenu
 from vues.creation_joueurs import Joueur
 #from vues.creation_joueurs import creer_joueurs
 from vues.tri_joueurs import TriJoueurs
-from vues.creation_joueurs import CreationJoueur
+from vues.creation_joueurs import CreationJoueurView
 from vues.creation_tournoi import NouveauTournoi
 from datetime import date
+from contrôleurs.player import JoueurControleur
 import json
 #from contrôleurs.creation_joueurs import tri_alpha
 #from contrôleurs.creation_joueurs import tri_elo
@@ -35,20 +36,13 @@ def main():
                 if choix == 1:
                     print("Création du tournoi")
                     
-                    nouveau_tournoi = NouveauTournoi()
-                    nouveau_tournoi.afficher_tournoi()
-                    """print()
+                    #nouveau_tournoi = NouveauTournoi()
+                    #nouveau_tournoi.afficher_tournoi()
+                    print()
                     print("Saisie des 8 joueurs")
                     print()
-                    nouveau_joueur = CreationJoueur()
-                    nouveau_joueur.creer_joueur()
-                    joueurs.append(nouveau_joueur)"""
-                    #player = nouveau_joueur.to_dict()
-                    #jsonString = json.dump(player)
-                    #print()
-                    #print("Liste des joueurs par ordre alphabétique")
-                    #nouveaux_joueurs.tri_alpha()
-                    #joueurs.tri_elo
+                    controleur=JoueurControleur()
+                    controleur.create()
                 
                 elif choix<1 or choix >6:
                     print("Le choix doit être un entier compris entre 0 et 6")
