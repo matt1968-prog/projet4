@@ -1,5 +1,5 @@
-from vues.player import Joueur
-#from modeles.player_before_first_round import JoueursPremierTour
+#from vues.player import Joueur
+from modeles.player import Joueur
 from modeles.player import Joueur
 from vues.tournoi import Tournoi
 from vues.match import Match
@@ -20,7 +20,9 @@ def main():
     
 
     joueurs = []
+    dic_joueurs={}
     choix=-1
+    jsonFile = open("data.json", "w")
     while choix!=0:
         menu_ecran = AffichageMenu()
         menu_ecran.display_menu()
@@ -33,20 +35,24 @@ def main():
                 if choix == 1:
                     print("Création du tournoi")
                     
-                    #nouveaux_joueurs.tri_alpha()
-                    
-                    #joueurs.tri_elo
                     nouveau_tournoi = NouveauTournoi()
                     nouveau_tournoi.afficher_tournoi()
-                    #print()
+                    """print()
                     print("Saisie des 8 joueurs")
                     print()
-                    nouveaux_joueurs = CreationJoueur()
-                    nouveaux_joueurs.creer_joueurs()
-                    print()
+                    nouveau_joueur = CreationJoueur()
+                    nouveau_joueur.creer_joueur()
+                    joueurs.append(nouveau_joueur)"""
+                    #player = nouveau_joueur.to_dict()
+                    #jsonString = json.dump(player)
+                    #print()
                     #print("Liste des joueurs par ordre alphabétique")
                     #nouveaux_joueurs.tri_alpha()
-
+                    #joueurs.tri_elo
+                
+                elif choix<1 or choix >6:
+                    print("Le choix doit être un entier compris entre 0 et 6")
+                
                 elif choix == 2:
                     pass
 
