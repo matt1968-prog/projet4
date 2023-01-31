@@ -4,8 +4,8 @@ class Joueur:
         self.prenom = prenom
         self.dob = dob
         self.rating = rating
-        self.sexe=sexe
+        self.sexe = sexe
         self.score = score
-        """serialized_player = {'name': self.name, 'first name': self.f_name, 'dob' : self.dob,
-        'rating' :self.rating, 'sex' : self.sex, 'score' : self.score}
-        print(serialized_player)"""
+        
+    def to_dict(self):
+        return {'nom':self.nom, 'prenom': self.prenom, 'Date de naissance': self.dob, 'ELO': self.rating, 'Sexe': self.sexe, 'Score': self.score}
