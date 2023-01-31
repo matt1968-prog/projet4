@@ -1,21 +1,18 @@
+from vues.creation_tournoi import CreationTournoiView
 from modeles.tournoi import Tournoi
-class NouveauTournoi:
+import json
 
-    def __init__(self):
-        self.nom_tournoi = input("Nom du tournoi :\n")
-        self.lieu_tournoi = input("Lieu du tournoi :\n")
-        self.date_tournoi = input("Date du tournoi : ")
-        self.nombre_tours = 4
-        self.type_tournoi = int(input("Type de tournoi : Rapide(1), Blitz(2), Bullet(3) (Rapide par défaut) : \n"))
-        self.description = input("Description (facultatif, taper sur Entrée pour ne pas mettre de description) \n")
-        nouveau_tournoi = Tournoi(self.nom_tournoi, self.lieu_tournoi, self.date_tournoi, self.type_tournoi, self.description, self.nombre_tours)
-        
-    def afficher_tournoi(self):
-        print(f"Nom du tournoi : {self.nom_tournoi})
-        print(f"Lieu : {self.lieu_tournoi})
-        print(f"Lieu : {self.date_tournoi})
-        #print(self.joueurs)
-        print(self.nombre_tours)
-        print(f"Type de tournoi : {self.type_tournoi})
-        print(f"Description du directeur du tournoi : {self.description})
+
+class TournoiControleur:
     
+    def create(self):
+        vue = CreationTournoiView()
+        data_tournoi = []
+        #ligne qui suit est un ajout
+        nom_tournoi, lieu_tournoi, date_debut_tournoi, date_fin_tournoi, type_tournoi, description, nombre_tours=vue.creer_tournoi()
+        tournoi = Tournoi(nom_tournoi, lieu_tournoi, date_debut_tournoi, date_fin_tournoi, type_tournoi, description, nombre_tours)
+        data_tournoi.append(tournoi)
+        
+        with open ('data_tournoi.json', 'w') as file:
+            data_tournoi = json.dumps([j.to_dict() for j in data_tournoi], indent = 4)
+            file.write(data_tournoi)
