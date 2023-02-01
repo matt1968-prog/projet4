@@ -11,7 +11,6 @@ class CreationTournoiView:
         lieu_tournoi = input("Lieu du tournoi :\n")
         date_debut_tournoi = input("Date de début du tournoi : ")
         date_fin_tournoi = input("Date de fin du tournoi : ")
-        nombre_tours = 4
         while True:
             try:
                 type_tournoi = int(input("Type de tournoi : Rapide(1), Blitz(2), Bullet(3) (Rapide par défaut) : \n"))
@@ -19,12 +18,12 @@ class CreationTournoiView:
                     break
             except ValueError:
                 print("La valeur doit être un nombre entier compris entre 1 et 3")
-
         description = input("Description (Appuyer sur Entrée pour ne pas saisir de description) \n")
+        nombre_tours = 4
         #nouveau_tournoi = Tournoi(self.nom_tournoi, self.lieu_tournoi,
         #self.date_debut_tournoi, self.date_fin_tournoi, self.type_tournoi, self.description, self.nombre_tours)
 
-        return nom_tournoi, lieu_tournoi, date_debut_tournoi, date_fin_tournoi, type_tournoi, nombre_tours, description
+        return nom_tournoi, lieu_tournoi, date_debut_tournoi, date_fin_tournoi, type_tournoi, description, nombre_tours
         
     """def afficher_tournoi(self):
         TOURNAMENT_TYPE ={1:"Rapide", 2:"Blitz", 3:"Bullet"}

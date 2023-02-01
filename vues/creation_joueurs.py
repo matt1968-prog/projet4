@@ -2,6 +2,8 @@ import json
 from modeles.player import Joueur
 from vues.creation_tournoi import CreationTournoiView
 #from vues.liste_joueurs import affichage_liste
+#from vues.creation_joueurs import afficher_liste_joueurs
+#from contrôleurs.creation_joueurs import table
 
 
 class CreationJoueurView:
@@ -32,21 +34,21 @@ class CreationJoueurView:
         return nom, prenom, dob, sexe, rating
 
         #affichage des joueurs ligne 36 à 41, peuvent être effacée si non fonctionnelles (ajout en cours de test)
-        print("Liste alphabétique des joueurs\n")
+        """print("Liste alphabétique des joueurs\n")
         liste=affichage_liste(joueurs)
         joueurs.sort(key=lambda j: j.nom, reverse=False)      
         print(joueurs)
         for i in joueurs:
-            print("Nom : {i.nom} Prénom {i.prenom)}")
+            print("Nom : {i.nom} Prénom {i.prenom)}")"""
 
     #liste alphabétique des joueurs
     def afficher_liste_joueurs(self):
         #def __init__(self):
         #self.joueurs = joueurs  
-            joueurs.sort(key=lambda j: j.nom, reverse=False)
-            print("\nClassement par ordre alphabétique : \n")        
-            for i in joueurs:
-                print(i.nom, i.prenom, i.rating)
+        joueurs.sort(key=lambda j: j.nom, reverse=False)
+        print("\nClassement par ordre alphabétique : \n")        
+        for i in joueurs:
+            print(i.nom, i.prenom, i.rating)
     
     #classement des joueurs par ELO   
     def tri_elo(self):
