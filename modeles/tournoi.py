@@ -8,6 +8,7 @@ class Tournoi:
         self.nombre_tours = nombre_tours
         self.type_tournoi = type_tournoi
         self.description = description
+        self.nombre_tour=nombre_tours
 
     def to_dict(self):
-        return {'Nom du tournoi': self.nom_tournoi, 'Lieu du Tournoi': self.lieu_tournoi, 'Date de début': self.date_debut_tournoi, 'Date de fin': self.date_fin_tournoi, 'Description': self.description, 'Type de tournoi': self.type_tournoi}
+        return {'Nom du tournoi': self.nom_tournoi, 'Lieu du Tournoi': self.lieu_tournoi, 'Date de début': self.date_debut_tournoi, 'Date de fin': self.date_fin_tournoi, 'Description': self.description, 'Type de tournoi': self.type_tournoi, 'Nombre de tours': '4'}
