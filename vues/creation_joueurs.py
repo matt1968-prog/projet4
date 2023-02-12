@@ -1,9 +1,9 @@
 import json
 from modeles.player import Joueur
 from vues.creation_tournoi import CreationTournoiView
-#from vues.liste_joueurs import affichage_liste
-#from vues.creation_joueurs import afficher_liste_joueurs
-#from contrôleurs.creation_joueurs import table
+# from vues.liste_joueurs import affichage_liste
+# from vues.creation_joueurs import afficher_liste_joueurs
+# from contrôleurs.creation_joueurs import table
 
 
 class CreationJoueurView:
@@ -13,16 +13,20 @@ class CreationJoueurView:
     def creer_joueur(self):
         score = 0
         print("Saisie du joueur \n")
-        nom = input ("Nom du joueur :\n")
+        nom = input("Nom du joueur :\n")
         prenom = input("Prénom du joueur : \n")
-        try:
-            dob=int(input ("Année de naissance :"))
-        except ValueError:
-            print("Vous devez saisir une année valide")
+        dob = None
+        while dob is None:
+            try:
+                dob = int(input ("Année de naissance :"))
+            except ValueError:
+                print("Vous devez saisir une année valide")
         sexe = input("Sexe du joueur (H/F), par défaut H :")
         if sexe == "" or sexe.upper() != "F":
             sexe = "H"
     
+        id = input("Identifiant national du joueur : ")
+
         while True:
             try:
                 rating = int(input("Classement ELO (nombre entier >1599:) "))
@@ -30,10 +34,10 @@ class CreationJoueurView:
                     break
             except ValueError:
                 print("Le classement doit être un entier, positif et au moins égal à 1600")
-        
-        return nom, prenom, dob, sexe, rating
+       
+        return nom, prenom, dob, sexe, id, rating
 
-        #affichage des joueurs ligne 36 à 41, peuvent être effacée si non fonctionnelles (ajout en cours de test)
+        # affichage des joueurs ligne 36 à 41, peuvent être effacée si non fonctionnelles (ajout en cours de test)
         """print("Liste alphabétique des joueurs\n")
         liste=affichage_liste(joueurs)
         joueurs.sort(key=lambda j: j.nom, reverse=False)      
@@ -41,23 +45,23 @@ class CreationJoueurView:
         for i in joueurs:
             print("Nom : {i.nom} Prénom {i.prenom)}")"""
 
-    #liste alphabétique des joueurs
-    def afficher_liste_joueurs(self):
-        #def __init__(self):
-        #self.joueurs = joueurs  
-        joueurs.sort(key=lambda j: j.nom, reverse=False)
+    # liste alphabétique des joueurs
+    def afficher_liste_joueurs(self, joueurs):
+        # def __init__(self):
+        # self.joueurs = joueurs  
+        joueurs.sort(key=lambda j: j.nom)
         print("\nClassement par ordre alphabétique : \n")        
         for i in joueurs:
             print(i.nom, i.prenom, i.rating)
     
-    #classement des joueurs par ELO   
+    # classement des joueurs par ELO   
     def tri_elo(self):
         joueurs.sort(key=lambda j: j.rating, reverse=True)
         print("\nClassement par ELO : \n")        
         for i in joueurs:
             print(i.name, i.f_name, i.rating)
-    
-    #initialisation du tableau des matchs disputés. O si match non joué, 1 si match joué (ou i=j)
+ 
+    # initialisation du tableau des matchs disputés. O si match non joué, 1 si match joué (ou i=j)
     """"def init_matchs_joues(self):
         matchs_joues=[[][]]
     
@@ -70,33 +74,33 @@ class CreationJoueurView:
                 else:
                 matchs_joues.append(0)  """
 
-    #définition des matchs du 1er tour
+    # définition des matchs du 1er tour
     def match_round1(self):
         def __init__(self, joueur1, joueur2):
-            self.joueur1=joueur1
-            self.joueur2=joueur2   
+            self.joueur1 = joueur1
+            self.joueur2 = joueur2   
         
-    #affichage des matchs du 1er tour    
-    def display_round1():
-        for i in range(0,3):
+    # affichage des matchs du 1er tour    
+    def display_round1(self):
+        for i in range(0, 3):
             print(f"Match  {i} : ")
-            print(joueurs[i].nom +" vs "+ joueurs[i+3].nom)
+            print(joueurs[i].nom + " vs " + joueurs[i+3].nom)
             match=([joueurs[i].nom, joueurs[i].score], [joueurs[i+3].nom, joueurs[i+3], joueurs[i+3].score])
 
-    #saisie des résultats du 1er tour
+    # saisie des résultats du 1er tour
     def input_results(self):
-        for i in range(0,3):
+        for i in range(0, 3):
             z=i
-            print(joueurs[i].name +" vs "+ joueurs[i+3].name) 
-            resultat=int(input("Résultat : "))
-            if resultat==1:
-                joueurs[i].score+=1            
-            elif resultat==2:
-                 joueurs[i+3].score+=1
-            elif resultat==0:
-                joueurs[i].score+=0.5
-                joueurs[i+3].score+=0.5
+            print(joueurs[i].name + " vs " + joueurs[i+3].name) 
+            resultat = int(input("Résultat : "))
+            if resultat == 1:
+                joueurs[i].score += 1            
+            elif resultat == 2:
+                joueurs[i+3].score += 1
+            elif resultat == 0:
+                joueurs[i].score += 0.5
+                joueurs[i+3].score += 0.5
             else:
                 print("Donnée non valide")    
-        print(str(joueurs[i].score) +" " +str(joueurs[i+3].score))# -> vue pour l'affichage, controler pour modif des scores
+        print(str(joueurs[i].score) + " " + str(joueurs[i+3].score))  # -> vue pour l'affichage, controler pour modif des scores
         matchs_joues[i][z+3]=1

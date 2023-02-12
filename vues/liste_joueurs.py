@@ -5,7 +5,7 @@ class ListeJoueurs:
 
     def__init__(self, joueurs)
         
-    self.joueurs=joueurs
+    self.joueurs = joueurs
 
     def affichage_liste(self, joueurs):
         print("Liste alphabétique des joueurs\n")

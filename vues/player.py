@@ -1,9 +1,10 @@
 class Joueur:
-	def __init__(self, nom, prenom, date_naissance, sexe, rating, score=0):
+	def __init__(self, nom, prenom, date_naissance, sexe, id, rating, score=0):
 		self.nom=nom
 		self.prenom=prenom
 		self.date_naissance = date_naissance
 		self.sexe=sexe
+        self.id = id
 		self.rating=rating
 		self.score=score
     
