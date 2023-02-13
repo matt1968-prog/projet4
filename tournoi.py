@@ -15,6 +15,7 @@ def main():
 
     #dic_joueurs = {}
     choix = -1
+    nouveau_tournoi = False
     #joueur_cree = False
     #tournoi_cree = False
     while choix != 0:
@@ -27,13 +28,22 @@ def main():
         else:
             if choix >= 0 and choix <8:
                 if choix == 1:
-                    print("Création du tournoi\n")
+                    nouveau_tournoi = False
+                    while nouveau_tournoi == False:
+
+                        print("Attention, ce choix supprimera l'ancien tournoi s'il existe\n")
+                        print("Pour charger le tournoi en cours, sélectionnez le choix 2")
+                        print
+                        nouveauT = str(input("Etes-vous sur de vouloir creer un nouveau tournoi (O/N) ?"))
+                        if nouveauT == "o":
+                            nouveau_tournoi = True
+                    print("Création du tournoi  et saisie des joueurs\n")
                     controleur_tournoi = TournoiControleur()
                     controleur_tournoi.create()
                     #tournoi_cree=True
                     # affichage_tournoi=afficher_tournoi() ne trouve pas afficher_tournoi
-                    nouveau_tournoi = Tournoi()
-                    nouveau_tournoi.afficher_tournoi()
+                    #nouveau_tournoi = Tournoi()
+                    #nouveau_tournoi.afficher_tournoi()
                     print()
                     print("Saisie des 8 joueurs\n")
                     controleur_joueur = JoueurControleur()
@@ -59,16 +69,15 @@ def main():
                         print(f"Nom : {i.nom} Prénom {i.prenom} ELO : {i.rating}")"""
 
                 elif choix == 6:
-                    """data_joueurs = json.loads(file.read())
-                        joueurs = []
-                        for d in data_joueurs:
-                            j = Joueur(**d)
-                            joueurs.append(j)
-                        for i in data_joueurs:"""
+                    
                     dao=JoueurDAO()
-                    joueurs = dao.load()
+                    joueurs = dao.load()             
+                    joueurs.sort(key=lambda j: j.nom, reverse=False)
+                    print("\nListe par ordre alphabétique : \n")        
                     for i in joueurs:
                         print(i.nom, i.prenom, i.rating)
+                    print()
+                
                 elif choix == 7:
                     print("Tournoi actuel :\n")
                     dao_tournoi = TournoiDAO()
