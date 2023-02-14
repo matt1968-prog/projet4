@@ -31,5 +31,5 @@ class JoueurDAO:
             for d in data_joueurs:
                 j = Joueur(**d)
                 joueurs.append(j)
-            print(joueurs)
+            #print(joueurs)
             return joueurs
