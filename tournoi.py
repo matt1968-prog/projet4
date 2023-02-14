@@ -37,6 +37,7 @@ def main():
                         nouveauT = str(input("Etes-vous sur de vouloir creer un nouveau tournoi (O/N) ?"))
                         if nouveauT == "o":
                             nouveau_tournoi = True
+                            
                     print("Création du tournoi  et saisie des joueurs\n")
                     controleur_tournoi = TournoiControleur()
                     controleur_tournoi.create()
@@ -53,8 +54,21 @@ def main():
                     print("Le choix doit être un entier compris entre 0 et 6")
 
                 elif choix == 2:
-                    pass
-
+                    #pass
+                    #définition des matchs du premier tour selon leur classement ELO
+                    
+                    with open('data_joueurs.json', 'r') as file:
+                        data = json.loads(file.read())
+                        dao=JoueurDAO()
+                        joueurs = dao.load()
+                        joueurs.sort(key=lambda j: j.rating, reverse=True)
+                    
+                    for i in range(0, 2):
+                        print(f"Match  {i+1} : ")
+                        print(joueurs[i].nom + " vs " + joueurs[i+2].nom)
+                        match=([joueurs[i].nom, joueurs[i].rating], [joueurs[i+2].nom, joueurs[i+2], joueurs[i+2].rating])
+                        
+                
                 elif choix == 3:
                     pass
 
@@ -62,11 +76,14 @@ def main():
                     pass
 
                 elif choix == 5:
-                    pass
-                    """joueurs.sort(key=lambda j: j.rating, reverse=True)
+                    #pass
+                    dao=JoueurDAO()
+                    joueurs = dao.load()
+                    joueurs.sort(key=lambda j: j.rating, reverse=True)
                     print(joueurs)
+                    print("\nListe par classement ELO : \n")
                     for i in joueurs:
-                        print(f"Nom : {i.nom} Prénom {i.prenom} ELO : {i.rating}")"""
+                        print(f"Nom : {i.nom} Prénom {i.prenom} ELO : {i.rating}")
 
                 elif choix == 6:
                     
