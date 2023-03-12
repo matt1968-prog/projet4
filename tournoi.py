@@ -1,6 +1,7 @@
-#from vues.player import Joueur
+1#from vues.player import Joueur
 import json
 from modeles.player import Joueur, JoueurDAO
+from modeles.tournoi import TournoiDAO
 from vues.tournoi import Tournoi
 from vues.match import Match
 from vues.round import Tour
@@ -18,6 +19,7 @@ def main():
     nouveau_tournoi = False
     #joueur_cree = False
     #tournoi_cree = False
+    NBRE_JOUEURS=4
     while choix != 0:
         menu_ecran = AffichageMenu()
         menu_ecran.display_menu()
@@ -25,7 +27,11 @@ def main():
             choix = int(input("Votre choix : "))
         except ValueError:
             print(f"Valeur {choix} non valide. Faites un autre choix.")
+            if choix <0 or choix >8:
+                print("La valeur doit être comprise 0 et 8")
         else:
+            if choix < 1 or choix > 7:
+                    print("Le choix doit être un entier compris entre 0 et 7")
             if choix >= 0 and choix <8:
                 if choix == 1:
                     nouveau_tournoi = False
@@ -49,9 +55,20 @@ def main():
                     print("Saisie des 8 joueurs\n")
                     controleur_joueur = JoueurControleur()
                     controleur_joueur.create()  #affichage de la liste des données tournoi depuis controleurs/creation_tournoi
+                    #Affectation des matchs joués avant le premier tour pour éviter qu'un joueur puisse se rencontrer lui-même lors du premier tour (ou d'un tour suivant).MAJ après chaque match
+                    matchs_joues=[]
+                    rows, cols = (4, 4)
+                    for i in range (cols):
+                        col = []
+                        for j in range(rows):
+                            if i==j:
+                                col.append(1)
+                            else:
+                                col.append(0)
+                        matchs_joues.append(col)
+                    print(matchs_joues) #à fin d'information seulement
 
-                elif choix < 1 or choix > 7:
-                    print("Le choix doit être un entier compris entre 0 et 6")
+                
 
                 elif choix == 2:
                     #pass
@@ -62,6 +79,7 @@ def main():
                         dao=JoueurDAO()
                         joueurs = dao.load()
                         joueurs.sort(key=lambda j: j.rating, reverse=True)
+
                     
                     for i in range(0, 2):
                         print(f"Match  {i+1} : ")
