@@ -121,7 +121,7 @@ def main():
                     print("Tournoi actuel :\n")
                     donnees_tournoi = dao_tournoi.load()
                     for i in donnees_tournoi:
-                        print(i.nom_tournoi, i.date_tournoi, i.lieu_tournoi)
+                        print(i.nom_tournoi, i.date_debut_tournoi, i.lieu_tournoi)
                     print()
                     """with open('data_tournoi.json', 'r') as file:
                         data = json.loads(file.read())
