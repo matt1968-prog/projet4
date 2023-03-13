@@ -1,4 +1,4 @@
-1#from vues.player import Joueur
+1#  from vues.player import Joueur
 import json
 from modeles.player import Joueur, JoueurDAO
 from modeles.tournoi import TournoiDAO
@@ -19,7 +19,7 @@ def main():
     nouveau_tournoi = False
     #joueur_cree = False
     #tournoi_cree = False
-    NBRE_JOUEURS=4
+    NBRE_JOUEURS = 4
     while choix != 0:
         menu_ecran = AffichageMenu()
         menu_ecran.display_menu()
@@ -32,7 +32,7 @@ def main():
         else:
             if choix < 1 or choix > 7:
                     print("\nLe choix doit être un entier compris entre 0 et 7\n")
-            if choix >= 0 and choix <8:
+            if choix >= 0 and choix < 8:
                 if choix == 1:
                     nouveau_tournoi = False
                     while nouveau_tournoi == False:
@@ -43,7 +43,7 @@ def main():
                         nouveauT = str(input("Etes-vous sur de vouloir creer un nouveau tournoi (O/N) ?"))
                         if nouveauT == "o":
                             nouveau_tournoi = True
-                            
+
                     print("Création du tournoi  et saisie des joueurs\n")
                     controleur_tournoi = TournoiControleur()
                     controleur_tournoi.create()
@@ -61,32 +61,29 @@ def main():
                     for i in range (cols):
                         col = []
                         for j in range(rows):
-                            if i==j:
+                            if i == j:
                                 col.append(1)
                             else:
                                 col.append(0)
                         matchs_joues.append(col)
-                    print(matchs_joues) #à fin d'information seulement
-
-                
+                    print(matchs_joues)  #  à fin d'information seulement
 
                 elif choix == 2:
                     #pass
                     #définition des matchs du premier tour selon leur classement ELO (système suisse)
-                    
+                    print()
                     with open('data_joueurs.json', 'r') as file:
                         data = json.loads(file.read())
-                        dao=JoueurDAO()
+                        dao = JoueurDAO()
                         joueurs = dao.load()
                         joueurs.sort(key=lambda j: j.rating, reverse=True)
-
-                    
+                 
                     for i in range(0, 2):
                         print(f"Match  {i+1} : ")
                         print(joueurs[i].nom + " vs " + joueurs[i+2].nom)
-                        match=([joueurs[i].nom, joueurs[i].rating], [joueurs[i+2].nom, joueurs[i+2], joueurs[i+2].rating])
-                        
-                
+                        match = ([joueurs[i].nom, joueurs[i].rating], [joueurs[i+2].nom, joueurs[i+2], joueurs[i+2].rating])
+                    print()
+                                      
                 elif choix == 3:
                     pass
 
@@ -94,47 +91,45 @@ def main():
                     pass
 
                 elif choix == 5:
-                    dao=JoueurDAO()
+                    dao = JoueurDAO()
                     joueurs = dao.load()
                     joueurs.sort(key=lambda j: j.rating, reverse=True)
                     print(joueurs)
                     print("\nListe par classement ELO : \n")
                     for i in joueurs:
                         print(f"Nom : {i.nom} Prénom {i.prenom} ELO : {i.rating}")
-
-                elif choix == 6:
+                    print()
                     
-                    dao=JoueurDAO()
-                    joueurs = dao.load()             
                     joueurs.sort(key=lambda j: j.nom, reverse=False)
-                    print("\nListe par ordre alphabétique : \n")        
+                    print("\nListe par ordre alphabétique : \n")
                     for i in joueurs:
                         print(i.nom, i.prenom, i.rating)
                     print()
-                
+
+                elif choix == 6:
+                    
+                    dao = JoueurDAO()
+                    joueurs = dao.load()
+                    joueurs.sort(key=lambda j: j.nom, reverse=False)
+                    print("\nListe par ordre alphabétique : \n")
+                    for i in joueurs:
+                        print(i.nom, i.prenom, i.rating)
+                    print()
+               
                 elif choix == 7:
-                    """dao_tournoi = TournoiDAO()
+                    dao_tournoi = TournoiDAO()
                     print("Tournoi actuel :\n")
                     donnees_tournoi = dao_tournoi.load()
                     for i in donnees_tournoi:
                         print(i.nom_tournoi, i.date_tournoi, i.lieu_tournoi)
-                    print()"""
-                    with open('data_tournoi.json', 'r') as file:
+                    print()
+                    """with open('data_tournoi.json', 'r') as file:
                         data = json.loads(file.read())
                         nouveau_tournoi = []
                         for d in data:
                             j = Tournoi(**d)
                             nouveau_tournoi.append(j)
-                        print(nouveau_tournoi)
-
-
-                        #loadafficher_liste_joueurs(joueurs)
-                    #joueurs=dao.load()
-                    """print("Liste alphabétique des joueurs\n")
-                    joueurs.sort(key=lambda j: j.nom)
-                    print(joueurs)
-                    for i in joueurs:
-                        print(f"Nom : {i.nom} Prénom {i.prenom}")"""
+                        print(nouveau_tournoi)"""
 
                 elif choix == 0:
                     exit()
