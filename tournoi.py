@@ -85,7 +85,21 @@ def main():
                     print()
                                       
                 elif choix == 3:
-                    pass
+                    print("Pour les résultats, 1=gain premier joueur, 2=gain du second joueur, 0=match nul")
+                    for i in range(0,2):
+                        z = i
+                        print(joueurs[i].nom +" vs "+ joueurs[i+2].nom) 
+                        resultat=int(input("Résultat : "))
+                        if resultat==1:
+                            joueurs[i].score+=1            
+                        elif resultat==2:
+                            joueurs[i+2].score+=1
+                        elif resultat==0:
+                            joueurs[i].score+=0.5
+                            joueurs[i+2].score+=0.5
+                        else:
+                            print("Donnée non valide")    
+                        print(str(joueurs[i].score) +" " +str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
 
                 elif choix == 4:
                     pass
@@ -123,13 +137,6 @@ def main():
                     for i in donnees_tournoi:
                         print(i.nom_tournoi, i.date_debut_tournoi, i.lieu_tournoi)
                     print()
-                    """with open('data_tournoi.json', 'r') as file:
-                        data = json.loads(file.read())
-                        nouveau_tournoi = []
-                        for d in data:
-                            j = Tournoi(**d)
-                            nouveau_tournoi.append(j)
-                        print(nouveau_tournoi)"""
 
                 elif choix == 0:
                     exit()
