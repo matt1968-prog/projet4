@@ -14,12 +14,11 @@ from controleurs.creation_tournoi import TournoiControleur
 
 def main():
 
-    #dic_joueurs = {}
+    #  dic_joueurs = {}
     choix = -1
     nouveau_tournoi = False
-    #joueur_cree = False
-    #tournoi_cree = False
     NBRE_JOUEURS = 4
+    round_number=1
     while choix != 0:
         menu_ecran = AffichageMenu()
         menu_ecran.display_menu()
@@ -27,17 +26,17 @@ def main():
             choix = int(input("Votre choix : "))
         except ValueError:
             print(f"Valeur {choix} non valide. Faites un autre choix.")
-            if choix <0 or choix >8:
-                print("La valeur doit être comprise 0 et 8")
+            if choix < 0 or choix > 8:
+                print("La valeur doit être comprise 0 et 8\n")
         else:
             if choix < 1 or choix > 7:
-                    print("\nLe choix doit être un entier compris entre 0 et 7\n")
-            if choix >= 0 and choix < 8:
+                print("\nLe choix doit être un entier compris entre 0 et 7\n")
+            if choix >= 0 and choix < 9:
                 if choix == 1:
                     nouveau_tournoi = False
                     while nouveau_tournoi == False:
 
-                        print("Attention, ce choix supprimera l'ancien tournoi s'il existe\n")
+                        print("\nAttention, ce choix supprimera l'ancien tournoi s'il existe\n")
                         print("Pour charger le tournoi en cours, sélectionnez le choix 2")
                         print
                         nouveauT = str(input("Etes-vous sur de vouloir creer un nouveau tournoi (O/N) ?"))
@@ -58,7 +57,7 @@ def main():
                     #Affectation des matchs joués avant le premier tour pour éviter qu'un joueur puisse se rencontrer lui-même lors du premier tour (ou d'un tour suivant).MAJ après chaque match
                     matchs_joues = []
                     rows, cols = (NBRE_JOUEURS, NBRE_JOUEURS)
-                    for i in range (cols):
+                    for i in range(cols):
                         col = []
                         for j in range(rows):
                             if i == j:
@@ -68,7 +67,7 @@ def main():
                         matchs_joues.append(col)
                     print(matchs_joues)  #  à fin d'information seulement
 
-                elif choix == 2:
+                elif choix == 3:
                     #pass
                     #définition des matchs du premier tour selon leur classement ELO (système suisse)
                     print()
@@ -84,27 +83,36 @@ def main():
                         match = ([joueurs[i].nom, joueurs[i].rating], [joueurs[i+2].nom, joueurs[i+2], joueurs[i+2].rating])
                     print()
                                       
-                elif choix == 3:
-                    print("Pour les résultats, 1=gain premier joueur, 2=gain du second joueur, 0=match nul")
-                    for i in range(0,2):
-                        z = i
-                        print(joueurs[i].nom +" vs "+ joueurs[i+2].nom) 
-                        resultat=int(input("Résultat : "))
-                        if resultat==1:
-                            joueurs[i].score+=1            
+                elif choix == 4:
+                    print("Pour les résultats, 1=gain premier joueur, 2=gain second joueur, 0=match nul")
+                    for i in range(0, 2):
+                        #z = i
+                        print(joueurs[i].nom + " vs " + joueurs[i+2].nom) 
+                        resultat = int(input("Résultat : "))
+                        if resultat == 1:
+                            joueurs[i].score += 1
                         elif resultat==2:
-                            joueurs[i+2].score+=1
-                        elif resultat==0:
-                            joueurs[i].score+=0.5
-                            joueurs[i+2].score+=0.5
+                            joueurs[i+2].score += 1
+                        elif resultat == 0:
+                            joueurs[i].score += 0.5
+                            joueurs[i+2].score += 0.5
                         else:
                             print("Donnée non valide")    
                         print(str(joueurs[i].score) +" " +str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
 
-                elif choix == 4:
-                    pass
+                    #classement
+                    joueurs.sort(key=lambda j: j.score, reverse=True)
+                    
+                    print(f"Classement après le tour {round_number}\n")
+                    for i in joueurs:
+                        print(i.nom, i.prenom, i.score)
+                    round_number += 1
+                    print()
 
                 elif choix == 5:
+                    pass
+
+                elif choix == 6:
                     dao = JoueurDAO()
                     joueurs = dao.load()
                     joueurs.sort(key=lambda j: j.rating, reverse=True)
@@ -120,7 +128,7 @@ def main():
                         print(i.nom, i.prenom, i.rating)
                     print()
 
-                elif choix == 6:
+                elif choix == 7:
                     
                     dao = JoueurDAO()
                     joueurs = dao.load()
@@ -130,12 +138,12 @@ def main():
                         print(i.nom, i.prenom, i.rating)
                     print()
                
-                elif choix == 7:
+                elif choix == 8:
                     dao_tournoi = TournoiDAO()
                     print("Tournoi actuel :\n")
                     donnees_tournoi = dao_tournoi.load()
                     for i in donnees_tournoi:
-                        print(i.nom_tournoi, i.date_debut_tournoi, i.lieu_tournoi)
+                        print(f"Nom du tournoi : {i.nom_tournoi}\nLieu du tournoi : {i.lieu_tournoi}\nDate de debut du tournoi : {i.date_debut_tournoi}")
                     print()
 
                 elif choix == 0:
