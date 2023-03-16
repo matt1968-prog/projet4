@@ -52,6 +52,23 @@ def main():
                     #nouveau_tournoi = Tournoi()
                     #nouveau_tournoi.afficher_tournoi()
                     print()
+                    """print(f"Saisie des {NBRE_JOUEURS} joueurs\n")
+                    controleur_joueur = JoueurControleur()
+                    controleur_joueur.create()  #affichage de la liste des données tournoi depuis controleurs/creation_tournoi
+                    #Affectation des matchs joués avant le premier tour pour éviter qu'un joueur puisse se rencontrer lui-même lors du premier tour (ou d'un tour suivant).MAJ après chaque match
+                    matchs_joues = []
+                    rows, cols = (NBRE_JOUEURS, NBRE_JOUEURS)
+                    for i in range(cols):
+                        col = []
+                        for j in range(rows):
+                            if i == j:
+                                col.append(1)
+                            else:
+                                col.append(0)
+                        matchs_joues.append(col)
+                    print(matchs_joues)  #  à fin d'information seulement"""
+                
+                elif choix == 2 :
                     print(f"Saisie des {NBRE_JOUEURS} joueurs\n")
                     controleur_joueur = JoueurControleur()
                     controleur_joueur.create()  #affichage de la liste des données tournoi depuis controleurs/creation_tournoi
@@ -67,7 +84,7 @@ def main():
                                 col.append(0)
                         matchs_joues.append(col)
                     print(matchs_joues)  #  à fin d'information seulement
-
+                
                 elif choix == 3:
                     #pass
                     #définition des matchs du premier tour selon le classement ELO des joueurs (système suisse)
@@ -117,7 +134,7 @@ def main():
                     print(f"Classement après le tour {round_number}\n")
                     for i in joueurs:
                         print(i.nom, i.prenom, i.score)
-                    round_number += 1
+                    #round_number += 1
                     print()
 
                 elif choix == 5 :
@@ -150,10 +167,10 @@ def main():
                     
                     dao = JoueurDAO()
                     joueurs = dao.load()
-                    joueurs.sort(key=lambda j: j.score, reverse=False)
-                    print("\nListe par ordre alphabétique : \n")
+                    joueurs.sort(key=lambda j: j.score, reverse = True)
+                    print(f"\nClassement du tournoi après le tour {round_number}: \n")
                     for i in joueurs:
-                        print(i.nom, i.prenom, i.rating)
+                        print(i.nom, i.prenom, i.score)
                     print()
                
                 elif choix == 8:
@@ -161,7 +178,7 @@ def main():
                     print("Tournoi actuel :\n")
                     donnees_tournoi = dao_tournoi.load()
                     for i in donnees_tournoi:
-                        print(f"Nom du tournoi : {i.nom_tournoi}\nLieu du tournoi : {i.lieu_tournoi}\nDate de debut du tournoi : {i.date_debut_tournoi}")
+                        print(f"Nom du tournoi : {i.nom_tournoi}\nLieu du tournoi : {i.lieu_tournoi}\nDate de debut du tournoi : {i.date_debut_tournoi}\nDate de fin de tournoi : {i.date_fin_tournoi}\n")
                     print()
 
                 elif choix == 0:
