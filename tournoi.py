@@ -18,6 +18,7 @@ def main():
     choix = -1
     nouveau_tournoi = False
     NBRE_JOUEURS = 4
+    MAX_ROUND = 4
     round_number=1
     while choix != 0:
         menu_ecran = AffichageMenu()
@@ -69,7 +70,7 @@ def main():
 
                 elif choix == 3:
                     #pass
-                    #définition des matchs du premier tour selon leur classement ELO (système suisse)
+                    #définition des matchs du premier tour selon le classement ELO des joueurs (système suisse)
                     print()
                     with open('data_joueurs.json', 'r') as file:
                         data = json.loads(file.read())
@@ -85,6 +86,8 @@ def main():
                                       
                 elif choix == 4:
                     print("Pour les résultats, 1=gain premier joueur, 2=gain second joueur, 0=match nul")
+                    
+                    print(f"Résultats du tour {round_number}\n")
                     for i in range(0, 2):
                         #z = i
                         print(joueurs[i].nom + " vs " + joueurs[i+2].nom) 
@@ -99,6 +102,14 @@ def main():
                         else:
                             print("Donnée non valide")    
                         print(str(joueurs[i].score) +" " +str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
+                        
+                    # actualisation du tableau des matchs joués
+                    rows, cols = (NBRE_JOUEURS, NBRE_JOUEURS)
+                    for i in range(cols):
+                        #col = []
+                        for j in range(rows):
+                            col.append(1)   
+                        matchs_joues.append(col)
 
                     #classement
                     joueurs.sort(key=lambda j: j.score, reverse=True)
@@ -109,14 +120,21 @@ def main():
                     round_number += 1
                     print()
 
-                elif choix == 5:
-                    pass
-
+                elif choix == 5 :
+                    print("Matchs du tour suivant :")
+                    if round_number < MAX_ROUND :
+                        for i in range (0, 2):
+                            match=([joueurs[i].nom,], [joueurs[i+1].nom])
+                            print(f"Match : {match}")
+                    else:
+                        print("Nombre de tour max atteint")
+                        break
+                        
                 elif choix == 6:
                     dao = JoueurDAO()
                     joueurs = dao.load()
                     joueurs.sort(key=lambda j: j.rating, reverse=True)
-                    print(joueurs)
+                    #print(joueurs)
                     print("\nListe par classement ELO : \n")
                     for i in joueurs:
                         print(f"Nom : {i.nom} Prénom {i.prenom} ELO : {i.rating}")
@@ -132,7 +150,7 @@ def main():
                     
                     dao = JoueurDAO()
                     joueurs = dao.load()
-                    joueurs.sort(key=lambda j: j.nom, reverse=False)
+                    joueurs.sort(key=lambda j: j.score, reverse=False)
                     print("\nListe par ordre alphabétique : \n")
                     for i in joueurs:
                         print(i.nom, i.prenom, i.rating)
