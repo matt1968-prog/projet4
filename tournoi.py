@@ -1,4 +1,4 @@
-1#  from vues.player import Joueur
+from vues.player import Joueur
 import json
 from modeles.player import Joueur, JoueurDAO
 from modeles.tournoi import TournoiDAO
@@ -19,7 +19,7 @@ def main():
     nouveau_tournoi = False
     NBRE_JOUEURS = 4
     MAX_ROUND = 4
-    round_number=1
+    round_number = 1
     while choix != 0:
         menu_ecran = AffichageMenu()
         menu_ecran.display_menu()
@@ -67,8 +67,8 @@ def main():
                                 col.append(0)
                         matchs_joues.append(col)
                     print(matchs_joues)  #  à fin d'information seulement"""
-                
-                elif choix == 2 :
+
+                elif choix == 2:
                     print(f"Saisie des {NBRE_JOUEURS} joueurs\n")
                     controleur_joueur = JoueurControleur()
                     controleur_joueur.create()  #affichage de la liste des données tournoi depuis controleurs/creation_tournoi
@@ -84,7 +84,7 @@ def main():
                                 col.append(0)
                         matchs_joues.append(col)
                     print(matchs_joues)  #  à fin d'information seulement
-                
+
                 elif choix == 3:
                     #pass
                     #définition des matchs du premier tour selon le classement ELO des joueurs (système suisse)
@@ -94,59 +94,59 @@ def main():
                         dao = JoueurDAO()
                         joueurs = dao.load()
                         joueurs.sort(key=lambda j: j.rating, reverse=True)
-                 
+
                     for i in range(0, 2):
                         print(f"Match  {i+1} : ")
                         print(joueurs[i].nom + " vs " + joueurs[i+2].nom)
                         match = ([joueurs[i].nom, joueurs[i].rating], [joueurs[i+2].nom, joueurs[i+2], joueurs[i+2].rating])
                     print()
-                                      
+
                 elif choix == 4:
                     print("Pour les résultats, 1=gain premier joueur, 2=gain second joueur, 0=match nul")
-                    
+
                     print(f"Résultats du tour {round_number}\n")
                     for i in range(0, 2):
-                        #z = i
-                        print(joueurs[i].nom + " vs " + joueurs[i+2].nom) 
+                        print(joueurs[i].nom + " vs " + joueurs[i+2].nom)
                         resultat = int(input("Résultat : "))
                         if resultat == 1:
                             joueurs[i].score += 1
-                        elif resultat==2:
+                        elif resultat == 2:
                             joueurs[i+2].score += 1
                         elif resultat == 0:
                             joueurs[i].score += 0.5
                             joueurs[i+2].score += 0.5
                         else:
-                            print("Donnée non valide")    
-                        print(str(joueurs[i].score) +" " +str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
-                        
+                            print("Donnée non valide")
+                        print(str(joueurs[i].score) + " " + str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
+
                     # actualisation du tableau des matchs joués
                     rows, cols = (NBRE_JOUEURS, NBRE_JOUEURS)
                     for i in range(cols):
                         #col = []
                         for j in range(rows):
-                            col.append(1)   
+                            col.append(1)
                         matchs_joues.append(col)
+                        #print("Matchs joués {matchs_joues}")
 
                     #classement
                     joueurs.sort(key=lambda j: j.score, reverse=True)
-                    
+
                     print(f"Classement après le tour {round_number}\n")
                     for i in joueurs:
                         print(i.nom, i.prenom, i.score)
-                    #round_number += 1
+                    round_number += 1
                     print()
 
-                elif choix == 5 :
+                elif choix == 5:
                     print("Matchs du tour suivant :")
-                    if round_number < MAX_ROUND :
-                        for i in range (0, 2):
-                            match=([joueurs[i].nom,], [joueurs[i+1].nom])
-                            print(f"Match : {match}")
-                    else:
-                        print("Nombre de tour max atteint")
-                        break
-                        
+                    if round_number < MAX_ROUND:
+                        print("Matchs du tour {round_number}\n")
+                        for i in range(0, 2):
+                            print(f"Match  {i+1} : ")
+                            print(joueurs[i].nom + " vs " + joueurs[i+1].nom)
+                            match = ([joueurs[i].nom], [joueurs[i+1].nom])
+                    print()
+
                 elif choix == 6:
                     dao = JoueurDAO()
                     joueurs = dao.load()
@@ -156,7 +156,7 @@ def main():
                     for i in joueurs:
                         print(f"Nom : {i.nom} Prénom {i.prenom} ELO : {i.rating}")
                     print()
-                    
+
                     joueurs.sort(key=lambda j: j.nom, reverse=False)
                     print("\nListe par ordre alphabétique : \n")
                     for i in joueurs:
@@ -164,7 +164,7 @@ def main():
                     print()
 
                 elif choix == 7:
-                    
+
                     dao = JoueurDAO()
                     joueurs = dao.load()
                     joueurs.sort(key=lambda j: j.score, reverse = True)
@@ -172,7 +172,7 @@ def main():
                     for i in joueurs:
                         print(i.nom, i.prenom, i.score)
                     print()
-               
+
                 elif choix == 8:
                     dao_tournoi = TournoiDAO()
                     print("Tournoi actuel :\n")
