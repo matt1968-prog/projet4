@@ -37,14 +37,14 @@ def main():
                     nouveau_tournoi = False
                     while nouveau_tournoi == False:
 
-                        print("\nAttention, ce choix supprimera l'ancien tournoi s'il existe\n")
+                        """print("\nAttention, ce choix supprimera l'ancien tournoi s'il existe\n")"""
                         print("Pour charger le tournoi en cours, sélectionnez le choix 2")
                         print
                         nouveauT = str(input("Etes-vous sur de vouloir creer un nouveau tournoi (O/N) ?"))
                         if nouveauT == "o":
                             nouveau_tournoi = True
 
-                    print("Création du tournoi  et saisie des joueurs\n")
+                    print("Création du tournoi\n")
                     controleur_tournoi = TournoiControleur()
                     controleur_tournoi.create()
                     #tournoi_cree=True
@@ -86,8 +86,7 @@ def main():
                     print(matchs_joues)  #  à fin d'information seulement
 
                 elif choix == 3:
-                    #pass
-                    #définition des matchs du premier tour selon le classement ELO des joueurs (système suisse)
+                    # définition des matchs du premier tour selon le classement ELO des joueurs (système suisse)
                     print()
                     with open('data_joueurs.json', 'r') as file:
                         data = json.loads(file.read())
@@ -102,7 +101,7 @@ def main():
                     print()
 
                 elif choix == 4:
-                    print("Pour les résultats, 1=gain premier joueur, 2=gain second joueur, 0=match nul")
+                    print("Pour les résultats, 1=gain premier joueur, 2=gain second joueur, 0=match nul\n")
 
                     print(f"Résultats du tour {round_number}\n")
                     for i in range(0, 2):
@@ -134,17 +133,18 @@ def main():
                     print(f"Classement après le tour {round_number}\n")
                     for i in joueurs:
                         print(i.nom, i.prenom, i.score)
-                    round_number += 1
                     print()
 
                 elif choix == 5:
-                    print("Matchs du tour suivant :")
                     if round_number < MAX_ROUND:
                         print("Matchs du tour {round_number}\n")
+                        round_number += 1
+                        j=0
                         for i in range(0, 2):
                             print(f"Match  {i+1} : ")
-                            print(joueurs[i].nom + " vs " + joueurs[i+1].nom)
-                            match = ([joueurs[i].nom], [joueurs[i+1].nom])
+                            print(joueurs[j].nom + " vs " + joueurs[j+1].nom)
+                            match = ([joueurs[j].nom], [joueurs[j+1].nom])
+                            j+=2
                     print()
 
                 elif choix == 6:
