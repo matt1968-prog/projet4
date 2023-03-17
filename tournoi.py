@@ -135,6 +135,11 @@ def main():
                         print(i.nom, i.prenom, i.score)
                     print()
 
+                    # enregistrement du fichier AJOUT DU 17 MARS AU SOIR A VERIFIER
+                    with open('data_joueurs.json', 'w') as file:
+                        data_joueurs = json.dump(file)
+                        file.write(data_joueurs)
+
                 elif choix == 5:
                     if round_number < MAX_ROUND:
                         print("Matchs du tour {round_number}\n")
@@ -144,7 +149,7 @@ def main():
                             print(f"Match  {i+1} : ")
                             print(joueurs[j].nom + " vs " + joueurs[j+1].nom)
                             match = ([joueurs[j].nom], [joueurs[j+1].nom])
-                            j+=2
+                            j += 2
                     print()
 
                 elif choix == 6:
