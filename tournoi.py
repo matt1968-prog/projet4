@@ -10,6 +10,9 @@ from vues.creation_joueurs import CreationJoueurView
 from datetime import date
 from controleurs.creation_joueurs import JoueurControleur
 from controleurs.creation_tournoi import TournoiControleur
+from pprint import pprint
+from typing import List
+from uuid import UUID, uuid4
 
 
 def main():
@@ -37,7 +40,6 @@ def main():
                     nouveau_tournoi = False
                     while nouveau_tournoi == False:
 
-                        """print("\nAttention, ce choix supprimera l'ancien tournoi s'il existe\n")"""
                         print("Pour charger le tournoi en cours, sélectionnez le choix 2")
                         print
                         nouveauT = str(input("Etes-vous sur de vouloir creer un nouveau tournoi (O/N) ?"))
@@ -94,29 +96,78 @@ def main():
                         joueurs = dao.load()
                         joueurs.sort(key=lambda j: j.rating, reverse=True)
 
-                    for i in range(0, 2):
-                        print(f"Match  {i+1} : ")
-                        print(joueurs[i].nom + " vs " + joueurs[i+2].nom)
-                        match = ([joueurs[i].nom, joueurs[i].rating], [joueurs[i+2].nom, joueurs[i+2], joueurs[i+2].rating])
-                    print()
+                    if round_number == 1:
+                        print(f"Matchs du tour {round_number}\n")
+                        for i in range(0, 2):
+                            print(f"Match  {i+1} : ")
+                            print(joueurs[i].nom + " vs " + joueurs[i+2].nom)
+                            match = ([joueurs[i].nom, joueurs[i].rating], [joueurs[i+2].nom, joueurs[i+2], joueurs[i+2].rating])
+                        print()
+                    
+                    elif round_number > 1 and round_number < MAX_ROUND:
+                        print(f"Matchs du tour {round_number}\n")
+                        round_number += 1
+                        joueurs.sort(key=lambda j: j.score)
+                        j=0
+                        for i in range(0, 2):
+                            print(f"Match  {i+1} : ")
+                            print(joueurs[j].nom + " vs " + joueurs[j+1].nom)
+                            match = ([joueurs[j].nom], [joueurs[j+1].nom])
+                            j += 2
+                        print()
 
                 elif choix == 4:
                     print("Pour les résultats, 1=gain premier joueur, 2=gain second joueur, 0=match nul\n")
 
                     print(f"Résultats du tour {round_number}\n")
-                    for i in range(0, 2):
-                        print(joueurs[i].nom + " vs " + joueurs[i+2].nom)
-                        resultat = int(input("Résultat : "))
-                        if resultat == 1:
-                            joueurs[i].score += 1
-                        elif resultat == 2:
-                            joueurs[i+2].score += 1
-                        elif resultat == 0:
-                            joueurs[i].score += 0.5
-                            joueurs[i+2].score += 0.5
-                        else:
-                            print("Donnée non valide")
-                        print(str(joueurs[i].score) + " " + str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
+                    if round_number == 1:
+                        for i in range(0, 2):
+                            print(joueurs[i].nom + " vs " + joueurs[i+2].nom)
+                            resultat = int(input("Résultat : "))
+                            if resultat == 1:
+                                joueurs[i].score += 1
+                            elif resultat == 2:
+                                joueurs[i+2].score += 1
+                            elif resultat == 0:
+                                joueurs[i].score += 0.5
+                                joueurs[i+2].score += 0.5
+                            else:
+                                print("Donnée non valide")
+                            print(str(joueurs[i].score) + " " + str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
+                        round_number += 1
+                    
+                    elif round_number > 1 and round_number < 5: 
+                        j=0
+                        for i in range(0, 2):
+                            print(f"Match  {i+1} : ")
+                            print(joueurs[j].nom + " vs " + joueurs[j+1].nom)
+                            match = ([joueurs[j].nom], [joueurs[j+1].nom])
+                            resultat = int(input("Résultat : "))
+                            if resultat == 1:
+                                joueurs[j].score += 1
+                            elif resultat == 2:
+                                joueurs[j+1].score += 1
+                            elif resultat == 0:
+                                joueurs[j].score += 0.5
+                                joueurs[j+1].score += 0.5
+                            else:
+                                print("Donnée non valide")
+                            j += 2
+                        round_number += 1
+                    
+                    # maj des matchs disputés
+                    rows, cols = (NBRE_JOUEURS, NBRE_JOUEURS)
+                    for i in range(cols):
+                        #col = []
+                        for j in range(rows):
+                                col.append(1)
+                        matchs_joues.append(col)
+                    print(matchs_joues)  #  à fin d'information seulement
+
+                    #enregistrement après saisie dees résultats du tour achevé
+                    with open('data_joueurs.json', 'w') as file:
+                        data_joueurs = json.dumps([j.to_dict() for j in joueurs], indent=4)
+                        file.write(data_joueurs)
 
                     # actualisation du tableau des matchs joués
                     rows, cols = (NBRE_JOUEURS, NBRE_JOUEURS)
@@ -135,14 +186,14 @@ def main():
                         print(i.nom, i.prenom, i.score)
                     print()
 
-                    # enregistrement du fichier AJOUT DU 17 MARS AU SOIR A VERIFIER
+                    """# enregistrement du fichier AJOUT DU 17 MARS AU SOIR A VERIFIER
                     with open('data_joueurs.json', 'w') as file:
                         data_joueurs = json.dump(file)
-                        file.write(data_joueurs)
+                        file.write(data_joueurs)"""
 
                 elif choix == 5:
                     if round_number < MAX_ROUND:
-                        print("Matchs du tour {round_number}\n")
+                        print(f"Matchs du tour {round_number}\n")
                         round_number += 1
                         j=0
                         for i in range(0, 2):
