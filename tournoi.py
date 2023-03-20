@@ -88,7 +88,7 @@ def main():
                     print(matchs_joues)  #  à fin d'information seulement
 
                 elif choix == 3:
-                    # définition des matchs du premier tour selon le classement ELO des joueurs (système suisse)
+                    # définition des matchs du premier tour selon le classement ELO des joueurs (système suisse) ou des tours suivants
                     print()
                     with open('data_joueurs.json', 'r') as file:
                         data = json.loads(file.read())
@@ -134,7 +134,6 @@ def main():
                             else:
                                 print("Donnée non valide")
                             print(str(joueurs[i].score) + " " + str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
-                        round_number += 1
                     
                     elif round_number > 1 and round_number < 5: 
                         j=0
@@ -153,7 +152,8 @@ def main():
                             else:
                                 print("Donnée non valide")
                             j += 2
-                        round_number += 1
+                    
+                    #round_number += 1
                     
                     # maj des matchs disputés
                     rows, cols = (NBRE_JOUEURS, NBRE_JOUEURS)
@@ -185,6 +185,8 @@ def main():
                     for i in joueurs:
                         print(i.nom, i.prenom, i.score)
                     print()
+
+                    round_number += 1
 
                     """# enregistrement du fichier AJOUT DU 17 MARS AU SOIR A VERIFIER
                     with open('data_joueurs.json', 'w') as file:
