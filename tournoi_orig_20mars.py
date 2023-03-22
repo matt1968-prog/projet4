@@ -41,7 +41,7 @@ def main():
                     
                     while nouveau_tournoi == False:
 
-                        print("Le nouveau tournoi va effacer l'ancien tournoi, s'il existe"))
+                        print("Le nouveau tournoi va effacer l'ancien tournoi, s'il existe")
                         nouveau_tournoi = True
                         # if nouveauT == "o":
                     #nouveau_tournoi = True
@@ -87,8 +87,7 @@ def main():
                         matchs_joues.append(col)
                     print(matchs_joues)  #  à fin d'information seulement"""
                     #méthode affectation des matchs avec tableau à deux dimensions
-                    print("Matchs disputés (par index)")
-                    print("Grille des matchs disputés par index, 1= déjà rencontré)\n")
+                    print("Initialisation de la grille des matchs par index, 1 = joueur de l'index correspondant est le joueur lui-même, match impossible\n")
                     matchs_joues =[]
                     
                     for ligne in range(NBRE_JOUEURS):
@@ -154,7 +153,7 @@ def main():
                             print(str(joueurs[i].score) + " " + str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
                         #matchs_joues[i][i+2]=1    
                     
-                    elif round_number > 1 and round_number < 5: 
+                    elif round_number > 1 and round_number < 4: 
                         j=0
                         for i in range(0, 2):
                             print(f"Match  {i+1} : ")
@@ -170,8 +169,10 @@ def main():
                                 joueurs[j+1].score += 0.5
                             else:
                                 print("Donnée non valide")
+                            matchs_joues[j][j+1]=1
+                            matchs_joues[j+1][j]=1
                             j += 2
-                    
+                    print (matchs_joues)
                     # round_number += 1
                     
                     # maj des matchs disputés A MODIFIER ET REMPLACER PAR TABLEAU A DEUX DIMENSIONS
@@ -184,7 +185,7 @@ def main():
                     print(matchs_joues)  #  à fin d'information seulement"""
                     
                     #méthode avec tableau 2D
-                    for ligne in range(4):
+                    """for ligne in range(4):
                         nvligne = []
                         for col in range(4):
                             if ligne == col:
@@ -194,7 +195,7 @@ def main():
                         matchs_joues.append(nvligne)
                     
                     for ligne in matchs_joues:
-                        print(ligne)
+                        print(ligne)"""
 
 
                     #enregistrement après saisie des résultats du tour achevé
@@ -276,7 +277,7 @@ def main():
                     joueurs = dao.load()
                     joueurs.sort(key=lambda j: j.score, reverse = True)
                     print(f"\nClassement du tournoi après le tour {round_number}: \n")
-                    Print("Nom:             Prénom :            Score :")
+                    print("Nom:             Prénom :            Score :")
                     for i in joueurs:
                         print(i.nom, i.prenom, i.score)
                     print()
