@@ -24,6 +24,8 @@ def main():
     MAX_ROUND = 4
     round_number = 1
     nouveau_tournoi = False
+    matchs = []
+    nom_base_tour="Round "
     while choix != 0:
         menu_ecran = AffichageMenu()
         menu_ecran.display_menu()
@@ -54,38 +56,12 @@ def main():
                     #nouveau_tournoi = Tournoi()
                     #nouveau_tournoi.afficher_tournoi()
                     print()
-                    """print(f"Saisie des {NBRE_JOUEURS} joueurs\n")
-                    controleur_joueur = JoueurControleur()
-                    controleur_joueur.create()  #affichage de la liste des données tournoi depuis controleurs/creation_tournoi
-                    #Affectation des matchs joués avant le premier tour pour éviter qu'un joueur puisse se rencontrer lui-même lors du premier tour (ou d'un tour suivant).MAJ après chaque match
-                    matchs_joues = []
-                    rows, cols = (NBRE_JOUEURS, NBRE_JOUEURS)
-                    for i in range(cols):
-                        col = []
-                        for j in range(rows):
-                            if i == j:
-                                col.append(1)
-                            else:
-                                col.append(0)
-                        matchs_joues.append(col)
-                    print(matchs_joues)  #  à fin d'information seulement"""
 
                 elif choix == 2:
                     print(f"Saisie des {NBRE_JOUEURS} joueurs\n")
                     controleur_joueur = JoueurControleur()
                     controleur_joueur.create()  #affichage de la liste des données tournoi depuis controleurs/creation_tournoi
                     #Affectation des matchs joués avant le premier tour pour éviter qu'un joueur puisse se rencontrer lui-même lors du premier tour (ou d'un tour suivant).MAJ après chaque match
-                    """matchs_joues = []
-                    rows, cols = (NBRE_JOUEURS, NBRE_JOUEURS)
-                    for i in range(cols):
-                        col = []
-                        for j in range(rows):
-                            if i == j:
-                                col.append(1)
-                            else:
-                                col.append(0)
-                        matchs_joues.append(col)
-                    print(matchs_joues)  #  à fin d'information seulement"""
                     #méthode affectation des matchs avec tableau à deux dimensions
                     print("Initialisation de la grille des matchs par index, 1 = joueur de l'index correspondant est le joueur lui-même, match impossible\n")
                     matchs_joues =[]
@@ -117,9 +93,11 @@ def main():
                         for i in range(0, 2):
                             print(f"Match  {i+1} : ")
                             print(joueurs[i].nom + " vs " + joueurs[i+2].nom)
-                            match = ([joueurs[i].nom, joueurs[i].rating], [joueurs[i+2].nom, joueurs[i+2], joueurs[i+2].rating])
+                            match = ([joueurs[i].nom, joueurs[i].score], [joueurs[i+2].nom, joueurs[i+2], joueurs[i+2].score])
+                            matchs.append(match)
                         print()
                     
+                    # à partir du tour 2, appariement en fonction des scores dans le tournoi (1 contre 2, 3 vs 4 etc.)
                     elif round_number > 1 and round_number < MAX_ROUND:
                         print(f"Matchs du tour {round_number}\n")
                         #round_number += 1
@@ -129,8 +107,14 @@ def main():
                             print(f"Match  {i+1} : ")
                             print(joueurs[j].nom + " vs " + joueurs[j+1].nom)
                             match = ([joueurs[j].nom], [joueurs[j+1].nom])
+                            matchs.append(match)
                             j += 2
                         print()
+
+                        match = ([joueurs[i].nom, joueurs[i].score], [joueurs[i+1].nom, joueurs[i+1], joueurs[i+1].score])
+                        matchs.append(match)
+                        round_name = nom_base_tour +str(round_number)
+                        print(f"Nom du tour : {round_name}")
 
                 elif choix == 4:
                     print("Pour les résultats, 1=gain premier joueur, 2=gain second joueur, 0=match nul\n")
@@ -150,8 +134,8 @@ def main():
                                 joueurs[i+2].score += 0.5
                             else:
                                 print("Donnée non valide")
-                            print(str(joueurs[i].score) + " " + str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
-                        #matchs_joues[i][i+2]=1    
+                                print(str(joueurs[i].score) + " " + str(joueurs[i+2].score))# -> vue pour l'affichage, controler pour modif des scores
+                            #matchs_joues[i][i+2]=1    
                     
                     elif round_number > 1 and round_number < 4: 
                         j=0
@@ -169,10 +153,16 @@ def main():
                                 joueurs[j+1].score += 0.5
                             else:
                                 print("Donnée non valide")
-                            matchs_joues[j][j+1]=1
-                            matchs_joues[j+1][j]=1
+                            matchs_joues[j][j+1] = 1
+                            matchs_joues[j+1][j] = 1
                             j += 2
+                            print(f" j = {j}")
+                            #matchs_joues[j][j+1] = 1
+                            #matchs_joues[j+1][j] = 1
+                    else:
+                        print("Tous les tours ont été joués. Le tournoi est terminé.")        
                     print (matchs_joues)
+                    print()
                     # round_number += 1
                     
                     # maj des matchs disputés A MODIFIER ET REMPLACER PAR TABLEAU A DEUX DIMENSIONS
@@ -228,7 +218,7 @@ def main():
 
                     # méthode avec tableau 2D
 
-                    #classement
+                    # màj classement après le tour
                     joueurs.sort(key=lambda j: j.score, reverse=True)
 
                     print(f"Classement après le tour {round_number}\n")
@@ -251,7 +241,7 @@ def main():
                         for i in range(0, 2):
                             print(f"Match  {i+1} : ")
                             print(joueurs[j].nom + " vs " + joueurs[j+1].nom)
-                            match = ([joueurs[j].nom], [joueurs[j+1].nom])
+                            match = ([joueurs[j].nom, joueurs[j].score], [joueurs[j+1].nom, joueurs(j+1).score])
                             j += 2
                     print()
 
