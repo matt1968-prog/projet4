@@ -1,23 +1,22 @@
 import json
 from vues.player import Joueur
-from modeles.player import Joueur, JoueurDAO
+#from modeles.player import Joueur, JoueurDAO
 from modeles.tournoi import TournoiDAO
-from modeles.tour import Round
-from vues.tournoi import Tournoi
-from vues.match import Match
-from vues.tour import CreationTourView
+#from modeles.tour import Round
+#from vues.tournoi import Tournoi
+#from vues.match import Match
+#from vues.tour import CreationTourView
 from vues.menu import AffichageMenu
-from vues.creation_joueurs import CreationJoueurView
-from vues.creation_tour import CreationTourView
-from datetime import date
+#from vues.creation_joueurs import CreationJoueurView
+#from vues.creation_tour import CreationTourView
 from controleurs.creation_joueurs import JoueurControleur
 from controleurs.creation_tournoi import TournoiControleur
-from uuid import UUID, uuid4
-from controleurs.creation_tours import TourControleur
-from datetime import datetime
-import locale
-from pprint import pprint
-from typing import List
+#from uuid import UUID, uuid4
+#from controleurs.creation_tours import TourControleur
+#from datetime import datetime
+#import locale
+#from pprint import pprint
+#from typing import List
 
 
 def main():
@@ -27,16 +26,9 @@ def main():
     NBRE_JOUEURS = 4
     MAX_ROUND = 4
     round_number = 1
-
-    nouveau_tournoi = False
     matchs = []
     nom_base_tour = "Round "
     tournoi_termine = False
-
-    #round_name = "Tournoi test"
-    #controleur_tour = ControleurTour()
-    #controleur_tour.create()
-    exit
 
     while choix != 0:
         menu_ecran = AffichageMenu()
@@ -68,7 +60,6 @@ def main():
                     controleur_joueur = JoueurControleur()
                     controleur_joueur.create()  #affichage de la liste des données tournoi depuis controleurs/creation_tournoi
                     #Affectation des matchs joués avant le premier tour pour éviter qu'un joueur puisse se rencontrer lui-même lors du premier tour (ou d'un tour suivant).MAJ après chaque match
-                    #méthode affectation des matchs avec tableau à deux dimensions
                     print("Initialisation de la grille des matchs par index, 1 = joueur de l'index correspondant est le joueur lui-même, match impossible\n")
                     matchs_joues = []
 
@@ -106,8 +97,8 @@ def main():
                                                #date_heure_debut, date_heure_fin, []) #INSERER PARAMETRES
                             #print(f"Paramètres du tour {round}\n")
                             print(f"Nom du tour : {round_name}\n")
-                            controleur_tour = TourControleur(id, round_name, round_number, date_heure_debut, date_heure_fin, [])
-                            controleur_tour.create()
+                            #controleur_tour = TourControleur(id, round_name, round_number, date_heure_debut, date_heure_fin, [])
+                            #controleur_tour.create()
                             print(f"Matchs du tour {round_number}\n")
                             print("-----------------")
                             print()
@@ -132,13 +123,16 @@ def main():
                             for i in range(0, 2):
                                 print(f"Match  {i+1} : ")
                                 print(joueurs[j].nom + " vs " + joueurs[j+1].nom)
+                                # ce matc a t-il déjà eu lieu ?
+                                if matchs_joues[j][j+1] = 1:
+                                    print("Attention, ces deux joueurs se sont déjà rencontrés\")
                                 match = ([joueurs[j].nom], joueurs[j].score, [joueurs[j+1].nom, joueurs[j+1].score])
                                 matchs.append(match)
                                 j += 2
                             print()
 
-                            match = ([joueurs[i].nom, joueurs[i].score], [joueurs[i+1].nom, joueurs[i+1], joueurs[i+1].score])
-                            matchs.append(match)
+                            #match = ([joueurs[i].nom, joueurs[i].score], [joueurs[i+1].nom, joueurs[i+1], joueurs[i+1].score])
+                            #matchs.append(match)
                     else:
                         print("Le tournoi est terminé ou aucun nouveau tournoi n'a été créé.\n")
                         continue  
@@ -146,7 +140,6 @@ def main():
                 elif choix == 4:
                     if not tournoi_termine == True:
                         print("Pour les résultats, 1=gain premier joueur, 2=gain second joueur, 0=match nul\n")
-
                         print(f"Résultats du tour {round_number}")
                         print("-----------------")
                         print()
