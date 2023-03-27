@@ -1,17 +1,18 @@
 import json
 from vues.player import Joueur
-#from modeles.player import Joueur, JoueurDAO
+from modeles.player import Joueur, JoueurDAO
 from modeles.tournoi import TournoiDAO
 #from modeles.tour import Round
 #from vues.tournoi import Tournoi
 #from vues.match import Match
 #from vues.tour import CreationTourView
 from vues.menu import AffichageMenu
+#from vues.creation_tournoi import afficher_tournoi
 #from vues.creation_joueurs import CreationJoueurView
 #from vues.creation_tour import CreationTourView
 from controleurs.creation_joueurs import JoueurControleur
 from controleurs.creation_tournoi import TournoiControleur
-#from uuid import UUID, uuid4
+from uuid import UUID, uuid4
 #from controleurs.creation_tours import TourControleur
 #from datetime import datetime
 #import locale
@@ -91,8 +92,8 @@ def main():
                             # création du tour MVC
                             id = uuid4()
                             round_name = nom_base_tour + str(round_number)
-                            date_heure_debut = "23 mars 10h00"
-                            date_heure_fin = "24 mars 20h00"
+                            #date_heure_debut = "23 mars 10h00"
+                            #date_heure_fin = "24 mars 20h00"
                             #round_name = Round(id, round_name, round_number,
                                                #date_heure_debut, date_heure_fin, []) #INSERER PARAMETRES
                             #print(f"Paramètres du tour {round}\n")
@@ -124,8 +125,8 @@ def main():
                                 print(f"Match  {i+1} : ")
                                 print(joueurs[j].nom + " vs " + joueurs[j+1].nom)
                                 # ce matc a t-il déjà eu lieu ?
-                                if matchs_joues[j][j+1] = 1:
-                                    print("Attention, ces deux joueurs se sont déjà rencontrés\")
+                                if matchs_joues[j][j+1] == 1:
+                                    print("Avertissement, ces deux joueurs se sont déjà rencontrés.\n")
                                 match = ([joueurs[j].nom], joueurs[j].score, [joueurs[j+1].nom, joueurs[j+1].score])
                                 matchs.append(match)
                                 j += 2
@@ -252,6 +253,7 @@ def main():
                     print()
 
                 elif choix == 8:
+                    #afficher_tournoi()
                     dao_tournoi = TournoiDAO()
                     print("Tournoi actuel :\n")
                     donnees_tournoi = dao_tournoi.load()
